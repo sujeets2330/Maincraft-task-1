@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainCrafts · Submissions</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="logo"><span>MainCrafts</span></div>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+
+        <li>
+          <a href="#">
+            Services
+            <i class="fas fa-chevron-down" style="font-size:0.8rem;margin-left:5px"></i>
+          </a>
+          <ul class="dropdown">
+            <li><a href="#"><i class="fas fa-paint-brush"></i> Web Design</a></li>
+            <li><a href="#"><i class="fas fa-mobile-alt"></i> App Development</a></li>
+            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+          </ul>
+        </li>
+
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="submissions.html" class="active"> Submissions</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>Form Submissions</h1>
+      <p>View all contact form submissions saved in your browser</p>
+    </div>
+  </section>
+
+  <section class="submissions-section">
+    <div class="container">
+      
+      <div class="submissions-header">
+        <h2>
+          <i class="fas fa-database" style="margin-right: 10px; color: var(--primary);"></i>
+          Saved Submissions
+        </h2>
+        <div class="submissions-stats" id="submissionsCount">
+          0 Submissions
+        </div>
+      </div>
+      
+      <!-- Clear All Button (shown only when there are submissions) -->
+      <div style="text-align: right; margin-bottom: 2rem;" id="clearAllContainer">
+        <button class="clear-all-btn" onclick="clearAllSubmissions()" style="display: none;">
+          <i class="fas fa-trash-alt"></i> Clear All Submissions
+        </button>
+      </div>
+      
+      <!-- Submissions Grid -->
+      <div id="submissionsList" class="submissions-grid">
+        <!-- Submissions will be loaded here dynamically -->
+      </div>
+      
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-content">
+
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <span>|</span>
+      <a href="#">Terms</a>
+      <span>|</span>
+      <a href="contact.html">Contact</a>
+      <span>|</span>
+      <a href="submissions.html">Submissions</a>
+    </div>
+
+    <div class="copyright">
+      <i class="far fa-copyright"></i>
+      2026 MainCrafts. All rights reserved.
+    </div>
+
+    <hr />
+
+    <div style="font-size:0.8rem;letter-spacing:0.5px">
+       Built with HTML5 & CSS3 — Internship Task 3
+    </div>
+
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+  // Show/hide clear all button based on submissions
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+      let submissions = JSON.parse(localStorage.getItem('contacts')) || [];
+      let clearBtn = document.querySelector('.clear-all-btn');
+      if (clearBtn) {
+        clearBtn.style.display = submissions.length > 0 ? 'inline-flex' : 'none';
+      }
+    }, 100);
+  });
+</script>
+
+</body>
+</html>
