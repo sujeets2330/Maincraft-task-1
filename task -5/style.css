@@ -61,6 +61,11 @@ header {
   -webkit-background-clip: text;
   color: transparent;
 }
+.logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
 
 /* Navigation */
 nav ul {
