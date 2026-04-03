@@ -1,0 +1,148 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Wireless Noise Cancelling Headphones",
+      "price": 2999,
+      "category": "Electronics",
+      "image": "https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.5,
+      "description": "Premium wireless headphones with active noise cancellation, 30-hour battery life, and crystal clear sound quality."
+    },
+    {
+      "id": 2,
+      "name": "Smart Watch Fitness Tracker",
+      "price": 1999,
+      "category": "Electronics",
+      "image": "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.2,
+      "description": "Track your health and fitness with heart rate monitor, step counter, and smartphone notifications."
+    },
+    {
+      "id": 3,
+      "name": "Cotton Casual T-Shirt",
+      "price": 599,
+      "category": "Fashion",
+      "image": "https://images.pexels.com/photos/428340/pexels-photo-428340.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.0,
+      "description": "Comfortable 100% cotton t-shirt, perfect for everyday wear. Available in multiple colors."
+    },
+    {
+      "id": 4,
+      "name": "Organic Basmati Rice",
+      "price": 899,
+      "category": "Grocery",
+      "image": "https://images.pexels.com/photos/4110258/pexels-photo-4110258.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.8,
+      "description": "Premium quality organic basmati rice, naturally grown with authentic aroma and taste."
+    },
+    {
+      "id": 5,
+      "name": "Bluetooth Portable Speaker",
+      "price": 1499,
+      "category": "Electronics",
+      "image": "https://images.pexels.com/photos/3361731/pexels-photo-3361731.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.3,
+      "description": "Waterproof portable speaker with 12-hour battery life and deep bass sound."
+    },
+    {
+      "id": 6,
+      "name": "Men's Denim Jeans",
+      "price": 1299,
+      "category": "Fashion",
+      "image": "https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.1,
+      "description": "Classic fit denim jeans with stretchable fabric for maximum comfort."
+    },
+    {
+      "id": 7,
+      "name": "Fresh Almonds 500g",
+      "price": 699,
+      "category": "Grocery",
+      "image": "https://images.pexels.com/photos/5703951/pexels-photo-5703951.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.9,
+      "description": "Premium California almonds, rich in protein and healthy nutrients."
+    },
+    {
+      "id": 8,
+      "name": "Gaming Wireless Mouse",
+      "price": 899,
+      "category": "Electronics",
+      "image": "https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.4,
+      "description": "High-precision gaming mouse with RGB lighting and programmable buttons."
+    },
+    {
+      "id": 9,
+      "name": "Women's Handbag",
+      "price": 1999,
+      "category": "Fashion",
+      "image": "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.6,
+      "description": "Stylish and spacious handbag made from premium synthetic leather."
+    },
+    {
+      "id": 10,
+      "name": "Pure Honey 1kg",
+      "price": 499,
+      "category": "Grocery",
+      "image": "https://images.pexels.com/photos/848521/pexels-photo-848521.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.7,
+      "description": "100% pure and natural honey, harvested from organic farms."
+    },
+    {
+      "id": 11,
+      "name": "4K Ultra HD Smart TV 55\"",
+      "price": 49999,
+      "category": "Electronics",
+      "image": "https://images.pexels.com/photos/808592/pexels-photo-808592.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.8,
+      "description": "55-inch 4K Smart TV with built-in streaming apps and voice control."
+    },
+    {
+      "id": 12,
+      "name": "Sports Running Shoes",
+      "price": 2499,
+      "category": "Fashion",
+      "image": "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.3,
+      "description": "Lightweight running shoes with cushioned sole for maximum comfort."
+    },
+    {
+      "id": 13,
+      "name": "Extra Virgin Olive Oil",
+      "price": 799,
+      "category": "Grocery",
+      "image": "https://images.pexels.com/photos/413900/pexels-photo-413900.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.6,
+      "description": "Cold-pressed extra virgin olive oil, perfect for cooking and salads."
+    },
+    {
+      "id": 14,
+      "name": "Mechanical Keyboard",
+      "price": 3499,
+      "category": "Electronics",
+      "image": "https://images.pexels.com/photos/2115256/pexels-photo-2115256.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.7,
+      "description": "RGB mechanical keyboard with blue switches for ultimate typing experience."
+    },
+    {
+      "id": 15,
+      "name": "Men's Leather Wallet",
+      "price": 799,
+      "category": "Fashion",
+      "image": "https://images.pexels.com/photos/128480/pexels-photo-128480.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.2,
+      "description": "Genuine leather wallet with multiple card slots and RFID blocking."
+    },
+    {
+      "id": 16,
+      "name": "Green Tea 100g",
+      "price": 299,
+      "category": "Grocery",
+      "image": "https://images.pexels.com/photos/5947029/pexels-photo-5947029.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "rating": 4.5,
+      "description": "Premium green tea leaves rich in antioxidants and natural flavor."
+    }
+  ]
+}

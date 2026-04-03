@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainCrafts · Shop</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="logo"><span>MainCrafts</span></div>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <a href="#">
+            Services
+            <i class="fas fa-chevron-down" style="font-size:0.8rem;margin-left:5px"></i>
+          </a>
+          <ul class="dropdown">
+            <li><a href="#"><i class="fas fa-paint-brush"></i> Web Design</a></li>
+            <li><a href="#"><i class="fas fa-mobile-alt"></i> App Development</a></li>
+            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="submissions.html"> Submissions</a></li>
+        <li><a href="dashboard.html"> Dashboard</a></li>
+        <li><a href="shop.html" class="active"> Shop</a></li>
+        <li><a href="cart.html" class="cart-badge">🛒 Cart <span id="cartCount" class="cart-count">0</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="shop-header">
+    <div class="container">
+      <h1> Our Products</h1>
+      <p>Discover amazing products at best prices</p>
+    </div>
+  </section>
+
+  <!-- Filters Section -->
+  <section class="filters-section">
+    <div class="container">
+      <div class="filter-container">
+        <div class="search-wrapper">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()">
+        </div>
+        
+        <div class="filter-group">
+          <select id="sortSelect" onchange="filterProducts()">
+            <option value="default">Sort by: Default</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name-asc">Name: A to Z</option>
+            <option value="name-desc">Name: Z to A</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="category-buttons" style="margin-top: 1rem;">
+        <button class="category-btn active" onclick="filterByCategory('all')">All</button>
+        <button class="category-btn" onclick="filterByCategory('Electronics')">Electronics</button>
+        <button class="category-btn" onclick="filterByCategory('Fashion')">Fashion</button>
+        <button class="category-btn" onclick="filterByCategory('Grocery')">Grocery</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products-section">
+    <div class="container">
+      <div class="products-header">
+        <div class="products-count" id="productsCount">Loading products...</div>
+      </div>
+      
+      <div id="productsGrid" class="products-grid">
+        <!-- Products will be loaded here -->
+      </div>
+      
+      <div id="pagination" class="pagination">
+        <!-- Pagination will be loaded here -->
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <span>|</span>
+      <a href="#">Terms</a>
+      <span>|</span>
+      <a href="contact.html">Contact</a>
+      <span>|</span>
+      <a href="submissions.html">Submissions</a>
+      <span>|</span>
+      <a href="dashboard.html">Dashboard</a>
+      <span>|</span>
+      <a href="shop.html">Shop</a>
+      <span>|</span>
+      <a href="cart.html">Cart</a>
+    </div>
+    <div class="copyright">
+      <i class="far fa-copyright"></i>
+      2026 MainCrafts. All rights reserved.
+    </div>
+    <hr />
+    <div style="font-size:0.8rem;letter-spacing:0.5px">
+       Built with HTML5, CSS3 & JavaScript 
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
