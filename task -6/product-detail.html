@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainCrafts · Product Details</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="logo"><span>MainCrafts</span></div>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <a href="#">
+            Services
+            <i class="fas fa-chevron-down" style="font-size:0.8rem;margin-left:5px"></i>
+          </a>
+          <ul class="dropdown">
+            <li><a href="#"><i class="fas fa-paint-brush"></i> Web Design</a></li>
+            <li><a href="#"><i class="fas fa-mobile-alt"></i> App Development</a></li>
+            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="submissions.html"> Submissions</a></li>
+        <li><a href="dashboard.html"> Dashboard</a></li>
+        <li><a href="shop.html"> Shop</a></li>
+        <li><a href="cart.html" class="cart-badge">🛒 Cart <span id="cartCount" class="cart-count">0</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="product-detail-section">
+    <div class="container">
+      <div id="productDetail">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Loading product details from API...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <span>|</span>
+      <a href="#">Terms</a>
+      <span>|</span>
+      <a href="contact.html">Contact</a>
+      <span>|</span>
+      <a href="submissions.html">Submissions</a>
+      <span>|</span>
+      <a href="dashboard.html">Dashboard</a>
+      <span>|</span>
+      <a href="shop.html">Shop</a>
+      <span>|</span>
+      <a href="cart.html">Cart</a>
+    </div>
+    <div class="copyright">
+      <i class="far fa-copyright"></i>
+      2026 MainCrafts. All rights reserved.
+    </div>
+    <hr />
+    <div style="font-size:0.8rem;letter-spacing:0.5px">
+       Built with FakeStoreAPI — Internship Task 6
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  import { fetchProductById } from './api.js';
+  
+  let currentProduct = null;
+  let quantity = 1;
+  
+  async function loadProductDetail() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = parseInt(urlParams.get('id'));
+    
+    if (!productId) {
+      document.getElementById('productDetail').innerHTML = `
+        <div class="error-message">
+          <i class="fas fa-exclamation-triangle"></i>
+          <h3>Product not found</h3>
+          <a href="shop.html" class="btn">Back to Shop</a>
+        </div>
+      `;
+      return;
+    }
+    
+    try {
+      currentProduct = await fetchProductById(productId);
+      
+      if (!currentProduct) {
+        throw new Error('Product not found');
+      }
+      
+      displayProductDetail();
+      updateCartBadge();
+    } catch (error) {
+      console.error('Failed to load product:', error);
+      document.getElementById('productDetail').innerHTML = `
+        <div class="error-message">
+          <i class="fas fa-exclamation-triangle"></i>
+          <h3>Failed to Load Product</h3>
+          <p>The product you're looking for may have been deleted or doesn't exist.</p>
+          <a href="shop.html" class="btn" style="margin-top: 1rem;">Back to Shop</a>
+        </div>
+      `;
+    }
+  }
+  
+  function displayProductDetail() {
+    if (!currentProduct) return;
+    
+    // Check if local product (ID > 100 or has isLocal flag)
+    const isLocal = currentProduct.id > 100 || currentProduct.isLocal === true;
+    const displayPrice = isLocal ? currentProduct.price : Math.round(currentProduct.price * 85);
+    
+    document.getElementById('productDetail').innerHTML = `
+      <div class="product-detail-container">
+        <img src="${currentProduct.image}" alt="${currentProduct.name}" class="product-detail-image" onerror="this.src='https://picsum.photos/300/200'">
+        <div class="product-detail-info">
+          <span class="product-detail-category">${escapeHtml(currentProduct.category)}</span>
+          <h1>${escapeHtml(currentProduct.name)}</h1>
+          <div class="product-rating">
+            <div class="stars">${'★'.repeat(Math.floor(currentProduct.rating))}${'☆'.repeat(5 - Math.floor(currentProduct.rating))}</div>
+            <span class="rating-text">${currentProduct.rating} / 5</span>
+          </div>
+          <div class="product-detail-price">₹${displayPrice.toLocaleString()} <span style="font-size: 1rem;">/-</span></div>
+          <p class="product-detail-description">${escapeHtml(currentProduct.description)}</p>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(-1)">-</button>
+            <span id="detailQuantity">1</span>
+            <button onclick="updateQuantity(1)">+</button>
+          </div>
+          <button class="add-to-cart-btn" onclick="addToCartFromDetail()">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+          <button class="buy-now-btn" onclick="buyNow()">
+            <i class="fas fa-bolt"></i> Buy Now
+          </button>
+        </div>
+      </div>
+    `;
+  }
+  
+  window.updateQuantity = function(change) {
+    quantity = Math.max(1, quantity + change);
+    const qtySpan = document.getElementById('detailQuantity');
+    if (qtySpan) qtySpan.textContent = quantity;
+  };
+  
+  window.addToCartFromDetail = function() {
+    if (!currentProduct) return;
+    
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    const isLocal = currentProduct.id > 100 || currentProduct.isLocal === true;
+    const cartPrice = isLocal ? currentProduct.price : Math.round(currentProduct.price * 85);
+    
+    const existingItem = cart.find(item => item.id === currentProduct.id);
+    
+    if (existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      cart.push({
+        id: currentProduct.id,
+        name: currentProduct.name,
+        price: cartPrice,
+        image: currentProduct.image,
+        quantity: quantity
+      });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    quantity = 1;
+    if (document.getElementById('detailQuantity')) {
+      document.getElementById('detailQuantity').textContent = '1';
+    }
+    updateCartBadge();
+    showNotification(' Added to cart!');
+  };
+  
+  window.buyNow = function() {
+    window.addToCartFromDetail();
+    window.location.href = 'cart.html';
+  };
+  
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const badges = document.querySelectorAll('#cartCount');
+    badges.forEach(badge => {
+      if (badge) badge.textContent = totalItems;
+    });
+  }
+  
+  function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+      font-weight: 500;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.remove();
+    }, 2000);
+  }
+  
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
+  loadProductDetail();
+</script>
+
+</body>
+</html>

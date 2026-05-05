@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainCrafts · Cart</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="logo"><span>MainCrafts</span></div>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <a href="#">
+            Services
+            <i class="fas fa-chevron-down" style="font-size:0.8rem;margin-left:5px"></i>
+          </a>
+          <ul class="dropdown">
+            <li><a href="#"><i class="fas fa-paint-brush"></i> Web Design</a></li>
+            <li><a href="#"><i class="fas fa-mobile-alt"></i> App Development</a></li>
+            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="submissions.html"> Submissions</a></li>
+        <li><a href="dashboard.html"> Dashboard</a></li>
+        <li><a href="shop.html"> Shop</a></li>
+        <li><a href="cart.html" class="active cart-badge">🛒 Cart <span id="cartCount" class="cart-count">0</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>🛒 Your Shopping Cart</h1>
+      <p>Review your items before checkout</p>
+    </div>
+  </section>
+
+  <section class="cart-section">
+    <div class="container">
+      <div class="cart-container">
+        <div id="cartItems" class="cart-items">
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading your cart...</p>
+          </div>
+        </div>
+        
+        <div class="cart-summary">
+          <h3>Order Summary</h3>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="subtotal">₹0</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span>Free</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="total">₹0</span>
+          </div>
+          <button class="checkout-btn" onclick="checkout()">
+            <i class="fas fa-lock"></i> Proceed to Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <span>|</span>
+      <a href="#">Terms</a>
+      <span>|</span>
+      <a href="contact.html">Contact</a>
+      <span>|</span>
+      <a href="submissions.html">Submissions</a>
+      <span>|</span>
+      <a href="dashboard.html">Dashboard</a>
+      <span>|</span>
+      <a href="shop.html">Shop</a>
+      <span>|</span>
+      <a href="cart.html">Cart</a>
+    </div>
+    <div class="copyright">
+      <i class="far fa-copyright"></i>
+      2026 MainCrafts. All rights reserved.
+    </div>
+    <hr />
+    <div style="font-size:0.8rem;letter-spacing:0.5px">
+       Built with FakeStoreAPI — Internship Task 6
+    </div>
+  </div>
+</footer>
+
+<script src="script.js" type="module"></script>
+
+<script type="module">
+  // Cart page functionality
+  function loadCart() {
+    const cartContainer = document.getElementById('cartItems');
+    if (!cartContainer) return;
+    
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    if (cart.length === 0) {
+      cartContainer.innerHTML = `
+        <div class="empty-cart">
+          <i class="fas fa-shopping-cart"></i>
+          <h3>Your cart is empty</h3>
+          <p>Looks like you haven't added any items yet</p>
+          <a href="shop.html" class="btn" style="margin-top: 1rem; display: inline-block;">Continue Shopping</a>
+        </div>
+      `;
+      updateCartSummary(0);
+      return;
+    }
+    
+    cartContainer.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+        <div class="cart-item-info">
+          <h4>${escapeHtml(item.name)}</h4>
+          <div class="cart-item-price">₹${item.price.toLocaleString()}</div>
+        </div>
+        <div class="cart-item-quantity">
+          <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+          <span>${item.quantity}</span>
+          <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+        </div>
+        <div class="cart-item-subtotal">₹${(item.price * item.quantity).toLocaleString()}</div>
+        <i class="fas fa-trash-alt remove-item" onclick="removeFromCart(${item.id})"></i>
+      </div>
+    `).join('');
+    
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    updateCartSummary(subtotal);
+  }
+  
+  function updateCartSummary(subtotal) {
+    const subtotalEl = document.getElementById('subtotal');
+    const totalEl = document.getElementById('total');
+    if (subtotalEl) subtotalEl.textContent = `₹${subtotal.toLocaleString()}`;
+    if (totalEl) totalEl.textContent = `₹${subtotal.toLocaleString()}`;
+  }
+  
+  window.updateQuantity = function(productId, newQuantity) {
+    if (newQuantity < 1) {
+      window.removeFromCart(productId);
+      return;
+    }
+    
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const item = cart.find(i => i.id === productId);
+    if (item) {
+      item.quantity = newQuantity;
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCart();
+      updateCartBadge();
+    }
+  };
+  
+  window.removeFromCart = function(productId) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart = cart.filter(item => item.id !== productId);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    loadCart();
+    updateCartBadge();
+    showNotification(' Item removed from cart');
+  };
+  
+  window.checkout = function() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart.length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+    alert(' Order placed successfully! Thank you for shopping with MainCrafts.');
+    localStorage.removeItem('cart');
+    loadCart();
+    updateCartBadge();
+  };
+  
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const badges = document.querySelectorAll('#cartCount');
+    badges.forEach(badge => {
+      if (badge) badge.textContent = totalItems;
+    });
+  }
+  
+  function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+      font-weight: 500;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.remove();
+    }, 2000);
+  }
+  
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
+  // Initialize cart page
+  loadCart();
+  updateCartBadge();
+</script>
+
+</body>
+</html>
